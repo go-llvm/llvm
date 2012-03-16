@@ -119,7 +119,6 @@ const (
 	Switch      = C.LLVMSwitch
 	IndirectBr  = C.LLVMIndirectBr
 	Invoke      = C.LLVMInvoke
-	Unwind      = C.LLVMUnwind
 	Unreachable = C.LLVMUnreachable
 
 	// Standard Binary Operators
@@ -678,7 +677,6 @@ func (v Value) IsACallInst() (rv Value)            { rv.C = C.LLVMIsACallInst(v.
 func (v Value) IsAIntrinsicInst() (rv Value)       { rv.C = C.LLVMIsAIntrinsicInst(v.C); return }
 func (v Value) IsADbgInfoIntrinsic() (rv Value)    { rv.C = C.LLVMIsADbgInfoIntrinsic(v.C); return }
 func (v Value) IsADbgDeclareInst() (rv Value)      { rv.C = C.LLVMIsADbgDeclareInst(v.C); return }
-func (v Value) IsAEHSelectorInst() (rv Value)      { rv.C = C.LLVMIsAEHSelectorInst(v.C); return }
 func (v Value) IsAMemIntrinsic() (rv Value)        { rv.C = C.LLVMIsAMemIntrinsic(v.C); return }
 func (v Value) IsAMemCpyInst() (rv Value)          { rv.C = C.LLVMIsAMemCpyInst(v.C); return }
 func (v Value) IsAMemMoveInst() (rv Value)         { rv.C = C.LLVMIsAMemMoveInst(v.C); return }

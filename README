@@ -19,6 +19,6 @@ To install, run the following (assuming you have curl and Go installed):
 Alternatively, you can use goinstall directly, but you must then set the
 CGO_CFLAGS and CGO_LDFLAGS environment variables:
     $ export CGO_CFLAGS=`llvm-config --cflags`
-    $ export CGO_LDFLAGS="`llvm-config --ldflags` -Wl,-L`llvm-config --libdir` -lLLVM-`llvm-config --version`"
-    $ goinstall github.com/axw/gollvm/llvm
+    $ export CGO_LDFLAGS="`llvm-config --ldflags` -Wl,-L`llvm-config --libdir` `llvm-config --libs interpreter all-targets bitwriter ipo engine`"
+    $ go get github.com/axw/gollvm/llvm
 

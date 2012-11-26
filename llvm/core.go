@@ -83,100 +83,102 @@ func boolToLLVMBool(b bool) C.LLVMBool {
 //-------------------------------------------------------------------------
 // llvm.Attribute
 //-------------------------------------------------------------------------
+
 const (
-	NoneAttribute            = 0
-	ZExtAttribute            = C.LLVMZExtAttribute
-	SExtAttribute            = C.LLVMSExtAttribute
-	NoReturnAttribute        = C.LLVMNoReturnAttribute
-	InRegAttribute           = C.LLVMInRegAttribute
-	StructRetAttribute       = C.LLVMStructRetAttribute
-	NoUnwindAttribute        = C.LLVMNoUnwindAttribute
-	NoAliasAttribute         = C.LLVMNoAliasAttribute
-	ByValAttribute           = C.LLVMByValAttribute
-	NestAttribute            = C.LLVMNestAttribute
-	ReadNoneAttribute        = C.LLVMReadNoneAttribute
-	ReadOnlyAttribute        = C.LLVMReadOnlyAttribute
-	NoInlineAttribute        = C.LLVMNoInlineAttribute
-	AlwaysInlineAttribute    = C.LLVMAlwaysInlineAttribute
-	OptimizeForSizeAttribute = C.LLVMOptimizeForSizeAttribute
-	StackProtectAttribute    = C.LLVMStackProtectAttribute
-	StackProtectReqAttribute = C.LLVMStackProtectReqAttribute
-	Alignment                = C.LLVMAlignment
-	NoCaptureAttribute       = C.LLVMNoCaptureAttribute
-	NoRedZoneAttribute       = C.LLVMNoRedZoneAttribute
-	NoImplicitFloatAttribute = C.LLVMNoImplicitFloatAttribute
-	NakedAttribute           = C.LLVMNakedAttribute
-	InlineHintAttribute      = C.LLVMInlineHintAttribute
-	StackAlignment           = C.LLVMStackAlignment
+	NoneAttribute            Attribute = 0
+	ZExtAttribute            Attribute = C.LLVMZExtAttribute
+	SExtAttribute            Attribute = C.LLVMSExtAttribute
+	NoReturnAttribute        Attribute = C.LLVMNoReturnAttribute
+	InRegAttribute           Attribute = C.LLVMInRegAttribute
+	StructRetAttribute       Attribute = C.LLVMStructRetAttribute
+	NoUnwindAttribute        Attribute = C.LLVMNoUnwindAttribute
+	NoAliasAttribute         Attribute = C.LLVMNoAliasAttribute
+	ByValAttribute           Attribute = C.LLVMByValAttribute
+	NestAttribute            Attribute = C.LLVMNestAttribute
+	ReadNoneAttribute        Attribute = C.LLVMReadNoneAttribute
+	ReadOnlyAttribute        Attribute = C.LLVMReadOnlyAttribute
+	NoInlineAttribute        Attribute = C.LLVMNoInlineAttribute
+	AlwaysInlineAttribute    Attribute = C.LLVMAlwaysInlineAttribute
+	OptimizeForSizeAttribute Attribute = C.LLVMOptimizeForSizeAttribute
+	StackProtectAttribute    Attribute = C.LLVMStackProtectAttribute
+	StackProtectReqAttribute Attribute = C.LLVMStackProtectReqAttribute
+	Alignment                Attribute = C.LLVMAlignment
+	NoCaptureAttribute       Attribute = C.LLVMNoCaptureAttribute
+	NoRedZoneAttribute       Attribute = C.LLVMNoRedZoneAttribute
+	NoImplicitFloatAttribute Attribute = C.LLVMNoImplicitFloatAttribute
+	NakedAttribute           Attribute = C.LLVMNakedAttribute
+	InlineHintAttribute      Attribute = C.LLVMInlineHintAttribute
+	StackAlignment           Attribute = C.LLVMStackAlignment
 )
 
 //-------------------------------------------------------------------------
 // llvm.Opcode
 //-------------------------------------------------------------------------
+
 const (
-	Ret         = C.LLVMRet
-	Br          = C.LLVMBr
-	Switch      = C.LLVMSwitch
-	IndirectBr  = C.LLVMIndirectBr
-	Invoke      = C.LLVMInvoke
-	Unreachable = C.LLVMUnreachable
+	Ret         Opcode = C.LLVMRet
+	Br          Opcode = C.LLVMBr
+	Switch      Opcode = C.LLVMSwitch
+	IndirectBr  Opcode = C.LLVMIndirectBr
+	Invoke      Opcode = C.LLVMInvoke
+	Unreachable Opcode = C.LLVMUnreachable
 
 	// Standard Binary Operators
-	Add  = C.LLVMAdd
-	FAdd = C.LLVMFAdd
-	Sub  = C.LLVMSub
-	FSub = C.LLVMFSub
-	Mul  = C.LLVMMul
-	FMul = C.LLVMFMul
-	UDiv = C.LLVMUDiv
-	SDiv = C.LLVMSDiv
-	FDiv = C.LLVMFDiv
-	URem = C.LLVMURem
-	SRem = C.LLVMSRem
-	FRem = C.LLVMFRem
+	Add  Opcode = C.LLVMAdd
+	FAdd Opcode = C.LLVMFAdd
+	Sub  Opcode = C.LLVMSub
+	FSub Opcode = C.LLVMFSub
+	Mul  Opcode = C.LLVMMul
+	FMul Opcode = C.LLVMFMul
+	UDiv Opcode = C.LLVMUDiv
+	SDiv Opcode = C.LLVMSDiv
+	FDiv Opcode = C.LLVMFDiv
+	URem Opcode = C.LLVMURem
+	SRem Opcode = C.LLVMSRem
+	FRem Opcode = C.LLVMFRem
 
 	// Logical Operators
-	Shl  = C.LLVMShl
-	LShr = C.LLVMLShr
-	AShr = C.LLVMAShr
-	And  = C.LLVMAnd
-	Or   = C.LLVMOr
-	Xor  = C.LLVMXor
+	Shl  Opcode = C.LLVMShl
+	LShr Opcode = C.LLVMLShr
+	AShr Opcode = C.LLVMAShr
+	And  Opcode = C.LLVMAnd
+	Or   Opcode = C.LLVMOr
+	Xor  Opcode = C.LLVMXor
 
 	// Memory Operators
-	Alloca        = C.LLVMAlloca
-	Load          = C.LLVMLoad
-	Store         = C.LLVMStore
-	GetElementPtr = C.LLVMGetElementPtr
+	Alloca        Opcode = C.LLVMAlloca
+	Load          Opcode = C.LLVMLoad
+	Store         Opcode = C.LLVMStore
+	GetElementPtr Opcode = C.LLVMGetElementPtr
 
 	// Cast Operators
-	Trunc    = C.LLVMTrunc
-	ZExt     = C.LLVMZExt
-	SExt     = C.LLVMSExt
-	FPToUI   = C.LLVMFPToUI
-	FPToSI   = C.LLVMFPToSI
-	UIToFP   = C.LLVMUIToFP
-	SIToFP   = C.LLVMSIToFP
-	FPTrunc  = C.LLVMFPTrunc
-	FPExt    = C.LLVMFPExt
-	PtrToInt = C.LLVMPtrToInt
-	IntToPtr = C.LLVMIntToPtr
-	BitCast  = C.LLVMBitCast
+	Trunc    Opcode = C.LLVMTrunc
+	ZExt     Opcode = C.LLVMZExt
+	SExt     Opcode = C.LLVMSExt
+	FPToUI   Opcode = C.LLVMFPToUI
+	FPToSI   Opcode = C.LLVMFPToSI
+	UIToFP   Opcode = C.LLVMUIToFP
+	SIToFP   Opcode = C.LLVMSIToFP
+	FPTrunc  Opcode = C.LLVMFPTrunc
+	FPExt    Opcode = C.LLVMFPExt
+	PtrToInt Opcode = C.LLVMPtrToInt
+	IntToPtr Opcode = C.LLVMIntToPtr
+	BitCast  Opcode = C.LLVMBitCast
 
 	// Other Operators
-	ICmp   = C.LLVMICmp
-	FCmp   = C.LLVMFCmp
-	PHI    = C.LLVMPHI
-	Call   = C.LLVMCall
-	Select = C.LLVMSelect
+	ICmp   Opcode = C.LLVMICmp
+	FCmp   Opcode = C.LLVMFCmp
+	PHI    Opcode = C.LLVMPHI
+	Call   Opcode = C.LLVMCall
+	Select Opcode = C.LLVMSelect
 	// UserOp1
 	// UserOp2
-	VAArg          = C.LLVMVAArg
-	ExtractElement = C.LLVMExtractElement
-	InsertElement  = C.LLVMInsertElement
-	ShuffleVector  = C.LLVMShuffleVector
-	ExtractValue   = C.LLVMExtractValue
-	InsertValue    = C.LLVMInsertValue
+	VAArg          Opcode = C.LLVMVAArg
+	ExtractElement Opcode = C.LLVMExtractElement
+	InsertElement  Opcode = C.LLVMInsertElement
+	ShuffleVector  Opcode = C.LLVMShuffleVector
+	ExtractValue   Opcode = C.LLVMExtractValue
+	InsertValue    Opcode = C.LLVMInsertValue
 )
 
 //-------------------------------------------------------------------------
@@ -184,20 +186,20 @@ const (
 //-------------------------------------------------------------------------
 
 const (
-	VoidTypeKind      = C.LLVMVoidTypeKind
-	FloatTypeKind     = C.LLVMFloatTypeKind
-	DoubleTypeKind    = C.LLVMDoubleTypeKind
-	X86_FP80TypeKind  = C.LLVMX86_FP80TypeKind
-	FP128TypeKind     = C.LLVMFP128TypeKind
-	PPC_FP128TypeKind = C.LLVMPPC_FP128TypeKind
-	LabelTypeKind     = C.LLVMLabelTypeKind
-	IntegerTypeKind   = C.LLVMIntegerTypeKind
-	FunctionTypeKind  = C.LLVMFunctionTypeKind
-	StructTypeKind    = C.LLVMStructTypeKind
-	ArrayTypeKind     = C.LLVMArrayTypeKind
-	PointerTypeKind   = C.LLVMPointerTypeKind
-	VectorTypeKind    = C.LLVMVectorTypeKind
-	MetadataTypeKind  = C.LLVMMetadataTypeKind
+	VoidTypeKind      TypeKind = C.LLVMVoidTypeKind
+	FloatTypeKind     TypeKind = C.LLVMFloatTypeKind
+	DoubleTypeKind    TypeKind = C.LLVMDoubleTypeKind
+	X86_FP80TypeKind  TypeKind = C.LLVMX86_FP80TypeKind
+	FP128TypeKind     TypeKind = C.LLVMFP128TypeKind
+	PPC_FP128TypeKind TypeKind = C.LLVMPPC_FP128TypeKind
+	LabelTypeKind     TypeKind = C.LLVMLabelTypeKind
+	IntegerTypeKind   TypeKind = C.LLVMIntegerTypeKind
+	FunctionTypeKind  TypeKind = C.LLVMFunctionTypeKind
+	StructTypeKind    TypeKind = C.LLVMStructTypeKind
+	ArrayTypeKind     TypeKind = C.LLVMArrayTypeKind
+	PointerTypeKind   TypeKind = C.LLVMPointerTypeKind
+	VectorTypeKind    TypeKind = C.LLVMVectorTypeKind
+	MetadataTypeKind  TypeKind = C.LLVMMetadataTypeKind
 )
 
 //-------------------------------------------------------------------------
@@ -205,32 +207,33 @@ const (
 //-------------------------------------------------------------------------
 
 const (
-	ExternalLinkage                 = C.LLVMExternalLinkage
-	AvailableExternallyLinkage      = C.LLVMAvailableExternallyLinkage
-	LinkOnceAnyLinkage              = C.LLVMLinkOnceAnyLinkage
-	LinkOnceODRLinkage              = C.LLVMLinkOnceODRLinkage
-	WeakAnyLinkage                  = C.LLVMWeakAnyLinkage
-	WeakODRLinkage                  = C.LLVMWeakODRLinkage
-	AppendingLinkage                = C.LLVMAppendingLinkage
-	InternalLinkage                 = C.LLVMInternalLinkage
-	PrivateLinkage                  = C.LLVMPrivateLinkage
-	DLLImportLinkage                = C.LLVMDLLImportLinkage
-	DLLExportLinkage                = C.LLVMDLLExportLinkage
-	ExternalWeakLinkage             = C.LLVMExternalWeakLinkage
-	GhostLinkage                    = C.LLVMGhostLinkage
-	CommonLinkage                   = C.LLVMCommonLinkage
-	LinkerPrivateLinkage            = C.LLVMLinkerPrivateLinkage
-	LinkerPrivateWeakLinkage        = C.LLVMLinkerPrivateWeakLinkage
-	//LinkerPrivateWeakDefAutoLinkage = C.LLVMLinkerPrivateWeakDefAutoLinkage
+	ExternalLinkage            Linkage = C.LLVMExternalLinkage
+	AvailableExternallyLinkage Linkage = C.LLVMAvailableExternallyLinkage
+	LinkOnceAnyLinkage         Linkage = C.LLVMLinkOnceAnyLinkage
+	LinkOnceODRLinkage         Linkage = C.LLVMLinkOnceODRLinkage
+	WeakAnyLinkage             Linkage = C.LLVMWeakAnyLinkage
+	WeakODRLinkage             Linkage = C.LLVMWeakODRLinkage
+	AppendingLinkage           Linkage = C.LLVMAppendingLinkage
+	InternalLinkage            Linkage = C.LLVMInternalLinkage
+	PrivateLinkage             Linkage = C.LLVMPrivateLinkage
+	DLLImportLinkage           Linkage = C.LLVMDLLImportLinkage
+	DLLExportLinkage           Linkage = C.LLVMDLLExportLinkage
+	ExternalWeakLinkage        Linkage = C.LLVMExternalWeakLinkage
+	GhostLinkage               Linkage = C.LLVMGhostLinkage
+	CommonLinkage              Linkage = C.LLVMCommonLinkage
+	LinkerPrivateLinkage       Linkage = C.LLVMLinkerPrivateLinkage
+	LinkerPrivateWeakLinkage   Linkage = C.LLVMLinkerPrivateWeakLinkage
+	//LinkerPrivateWeakDefAutoLinkage Linkage = C.LLVMLinkerPrivateWeakDefAutoLinkage
 )
 
 //-------------------------------------------------------------------------
 // llvm.Visibility
 //-------------------------------------------------------------------------
+
 const (
-	DefaultVisibility   = C.LLVMDefaultVisibility
-	HiddenVisibility    = C.LLVMHiddenVisibility
-	ProtectedVisibility = C.LLVMProtectedVisibility
+	DefaultVisibility   Visibility = C.LLVMDefaultVisibility
+	HiddenVisibility    Visibility = C.LLVMHiddenVisibility
+	ProtectedVisibility Visibility = C.LLVMProtectedVisibility
 )
 
 //-------------------------------------------------------------------------
@@ -238,11 +241,11 @@ const (
 //-------------------------------------------------------------------------
 
 const (
-	CCallConv           = C.LLVMCCallConv
-	FastCallConv        = C.LLVMFastCallConv
-	ColdCallConv        = C.LLVMColdCallConv
-	X86StdcallCallConv  = C.LLVMX86StdcallCallConv
-	X86FastcallCallConv = C.LLVMX86FastcallCallConv
+	CCallConv           CallConv = C.LLVMCCallConv
+	FastCallConv        CallConv = C.LLVMFastCallConv
+	ColdCallConv        CallConv = C.LLVMColdCallConv
+	X86StdcallCallConv  CallConv = C.LLVMX86StdcallCallConv
+	X86FastcallCallConv CallConv = C.LLVMX86FastcallCallConv
 )
 
 //-------------------------------------------------------------------------
@@ -250,16 +253,16 @@ const (
 //-------------------------------------------------------------------------
 
 const (
-	IntEQ  = C.LLVMIntEQ
-	IntNE  = C.LLVMIntNE
-	IntUGT = C.LLVMIntUGT
-	IntUGE = C.LLVMIntUGE
-	IntULT = C.LLVMIntULT
-	IntULE = C.LLVMIntULE
-	IntSGT = C.LLVMIntSGT
-	IntSGE = C.LLVMIntSGE
-	IntSLT = C.LLVMIntSLT
-	IntSLE = C.LLVMIntSLE
+	IntEQ  IntPredicate = C.LLVMIntEQ
+	IntNE  IntPredicate = C.LLVMIntNE
+	IntUGT IntPredicate = C.LLVMIntUGT
+	IntUGE IntPredicate = C.LLVMIntUGE
+	IntULT IntPredicate = C.LLVMIntULT
+	IntULE IntPredicate = C.LLVMIntULE
+	IntSGT IntPredicate = C.LLVMIntSGT
+	IntSGE IntPredicate = C.LLVMIntSGE
+	IntSLT IntPredicate = C.LLVMIntSLT
+	IntSLE IntPredicate = C.LLVMIntSLE
 )
 
 //-------------------------------------------------------------------------
@@ -267,22 +270,22 @@ const (
 //-------------------------------------------------------------------------
 
 const (
-	FloatPredicateFalse = C.LLVMRealPredicateFalse
-	FloatOEQ            = C.LLVMRealOEQ
-	FloatOGT            = C.LLVMRealOGT
-	FloatOGE            = C.LLVMRealOGE
-	FloatOLT            = C.LLVMRealOLT
-	FloatOLE            = C.LLVMRealOLE
-	FloatONE            = C.LLVMRealONE
-	FloatORD            = C.LLVMRealORD
-	FloatUNO            = C.LLVMRealUNO
-	FloatUEQ            = C.LLVMRealUEQ
-	FloatUGT            = C.LLVMRealUGT
-	FloatUGE            = C.LLVMRealUGE
-	FloatULT            = C.LLVMRealULT
-	FloatULE            = C.LLVMRealULE
-	FloatUNE            = C.LLVMRealUNE
-	FloatPredicateTrue  = C.LLVMRealPredicateTrue
+	FloatPredicateFalse FloatPredicate = C.LLVMRealPredicateFalse
+	FloatOEQ            FloatPredicate = C.LLVMRealOEQ
+	FloatOGT            FloatPredicate = C.LLVMRealOGT
+	FloatOGE            FloatPredicate = C.LLVMRealOGE
+	FloatOLT            FloatPredicate = C.LLVMRealOLT
+	FloatOLE            FloatPredicate = C.LLVMRealOLE
+	FloatONE            FloatPredicate = C.LLVMRealONE
+	FloatORD            FloatPredicate = C.LLVMRealORD
+	FloatUNO            FloatPredicate = C.LLVMRealUNO
+	FloatUEQ            FloatPredicate = C.LLVMRealUEQ
+	FloatUGT            FloatPredicate = C.LLVMRealUGT
+	FloatUGE            FloatPredicate = C.LLVMRealUGE
+	FloatULT            FloatPredicate = C.LLVMRealULT
+	FloatULE            FloatPredicate = C.LLVMRealULE
+	FloatUNE            FloatPredicate = C.LLVMRealUNE
+	FloatPredicateTrue  FloatPredicate = C.LLVMRealPredicateTrue
 )
 
 //-------------------------------------------------------------------------
@@ -383,7 +386,7 @@ func (m Module) AddNamedMetadataOperand(name string, operand Value) {
 //-------------------------------------------------------------------------
 
 // LLVM types conform to the following hierarchy:
-// 
+//
 //   types:
 //     integer type
 //     real type
@@ -399,7 +402,7 @@ func (m Module) AddNamedMetadataOperand(name string, operand Value) {
 // See llvm::LLVMTypeKind::getTypeID.
 func (t Type) TypeKind() TypeKind { return TypeKind(C.LLVMGetTypeKind(t.C)) }
 
-// See llvm::LLVMType::getContext. 
+// See llvm::LLVMType::getContext.
 func (t Type) Context() (c Context) {
 	c.C = C.LLVMGetTypeContext(t.C)
 	return
@@ -646,7 +649,7 @@ func (v Value) SetMetadata(kind int, node Value) {
 //#define LLVM_DECLARE_VALUE_CAST(name) \
 //  func (v Value) IsA##name() (rv Value) { rv.C = C.LLVMIsA##name(v.C); return } ||
 //LLVM_FOR_EACH_VALUE_SUBCLASS(LLVM_DECLARE_VALUE_CAST)
-//
+
 // Conversion functions. Generated using preprocess statements above. Return
 // the input value if it is an instance of the specified class, otherwise NULL.
 // See llvm::dyn_cast_or_null<>.
@@ -836,7 +839,7 @@ func ConstVector(scalarConstVals []Value, packed bool) (v Value) {
 	return
 }
 
-// Constant expressions 
+// Constant expressions
 func (v Value) Opcode() Opcode                { return Opcode(C.LLVMGetConstOpcode(v.C)) }
 func (v Value) InstructionOpcode() Opcode     { return Opcode(C.LLVMGetInstructionOpcode(v.C)) }
 func AlignOf(t Type) (v Value)                { v.C = C.LLVMAlignOf(t.C); return }
@@ -938,13 +941,13 @@ func ConstShuffleVector(veca, vecb, mask Value) (rv Value) {
 //                                   unsigned NumIdx);
 
 func ConstExtractValue(agg Value, indices []uint32) (rv Value) {
-    n := len(indices)
-    if n == 0 {
-        panic("one or more indices are required")
-    }
-    ptr := (*C.unsigned)(&indices[0])
-    rv.C = C.LLVMConstExtractValue(agg.C, ptr, C.unsigned(n))
-    return
+	n := len(indices)
+	if n == 0 {
+		panic("one or more indices are required")
+	}
+	ptr := (*C.unsigned)(&indices[0])
+	rv.C = C.LLVMConstExtractValue(agg.C, ptr, C.unsigned(n))
+	return
 }
 
 func ConstInsertValue(agg, val Value, indices []uint32) (rv Value) {
@@ -1722,12 +1725,12 @@ func NewMemoryBufferFromFile(path string) (b MemoryBuffer, err error) {
 	var cmsg *C.char
 	cpath := C.CString(path)
 	fail := C.LLVMCreateMemoryBufferWithContentsOfFile(cpath, &b.C, &cmsg)
-	if fail == 0 {
-		err = nil
-	} else {
+	if fail != 0 {
 		b.C = nil
 		err = errors.New(C.GoString(cmsg))
 		C.LLVMDisposeMessage(cmsg)
+	} else {
+		err = nil
 	}
 	C.free(unsafe.Pointer(cpath))
 	return
@@ -1736,12 +1739,12 @@ func NewMemoryBufferFromFile(path string) (b MemoryBuffer, err error) {
 func NewMemoryBufferFromStdin() (b MemoryBuffer, err error) {
 	var cmsg *C.char
 	fail := C.LLVMCreateMemoryBufferWithSTDIN(&b.C, &cmsg)
-	if fail == 0 {
-		err = nil
-	} else {
+	if fail != 0 {
 		b.C = nil
 		err = errors.New(C.GoString(cmsg))
 		C.LLVMDisposeMessage(cmsg)
+	} else {
+		err = nil
 	}
 	return
 }

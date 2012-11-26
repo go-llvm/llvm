@@ -11,11 +11,11 @@ import "errors"
 var writeBitcodeToFileErr = errors.New("Failed to write bitcode to file")
 
 func WriteBitcodeToFile(m Module, file *os.File) error {
-	result := C.LLVMWriteBitcodeToFD(m.C, C.int(file.Fd()), C.int(0), C.int(0))
-	if result == 0 {
-		return nil
+	fail := C.LLVMWriteBitcodeToFD(m.C, C.int(file.Fd()), C.int(0), C.int(0))
+	if fail != 0 {
+		return writeBitcodeToFileErr
 	}
-	return writeBitcodeToFileErr
+	return nil
 }
 
 // TODO(nsf): Figure out way how to make it work with io.Writer

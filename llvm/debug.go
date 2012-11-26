@@ -85,7 +85,7 @@ type DebugDescriptor interface {
 	// Tag returns the DWARF tag for this descriptor.
 	Tag() DwarfTag
 
-	// MDNode creates an LLVM metadata node.
+	// mdNode creates an LLVM metadata node.
 	mdNode(i *DebugInfo) Value
 }
 

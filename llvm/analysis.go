@@ -11,11 +11,11 @@ type VerifierFailureAction C.LLVMVerifierFailureAction
 
 const (
 	// verifier will print to stderr and abort()
-	AbortProcessAction = C.LLVMAbortProcessAction
+	AbortProcessAction VerifierFailureAction = C.LLVMAbortProcessAction
 	// verifier will print to stderr and return 1
-	PrintMessageAction = C.LLVMPrintMessageAction
+	PrintMessageAction VerifierFailureAction = C.LLVMPrintMessageAction
 	// verifier will just return 1
-	ReturnStatusAction = C.LLVMReturnStatusAction
+	ReturnStatusAction VerifierFailureAction = C.LLVMReturnStatusAction
 )
 
 // Verifies that a module is valid, taking the specified action if not.
@@ -26,12 +26,12 @@ func VerifyModule(m Module, a VerifierFailureAction) error {
 
 	// C++'s verifyModule means isModuleBroken, so it returns false if
 	// there are no errors
-	if broken == 0 {
-		return nil
+	if broken != 0 {
+		err := errors.New(C.GoString(cmsg))
+		C.LLVMDisposeMessage(cmsg)
+		return err
 	}
-	err := errors.New(C.GoString(cmsg))
-	C.LLVMDisposeMessage(cmsg)
-	return err
+	return nil
 }
 
 var verifyFunctionError = errors.New("Function is broken")
@@ -43,10 +43,10 @@ func VerifyFunction(f Value, a VerifierFailureAction) error {
 
 	// C++'s verifyFunction means isFunctionBroken, so it returns false if
 	// there are no errors
-	if broken == 0 {
-		return nil
+	if broken != 0 {
+		return verifyFunctionError
 	}
-	return verifyFunctionError
+	return nil
 }
 
 // Open up a ghostview window that displays the CFG of the current function.

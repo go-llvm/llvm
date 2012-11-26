@@ -1,8 +1,9 @@
 // Taken from: http://npcontemplation.blogspot.com/2008/06/secret-of-llvm-c-bindings.html
 package main
 
-import "llvm"
 import "fmt"
+
+import "github.com/axw/gollvm/llvm"
 
 func test() {
 	llvm.LinkInJIT()

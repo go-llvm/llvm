@@ -39,7 +39,7 @@ func (t TypeKind) String() string {
 func (t Type) String() string {
 	k := t.TypeKind()
 	s := k.String()
-	s = s[:len(s)-4]
+	s = s[:len(s)-len("Kind")]
 
 	switch k {
 	case ArrayTypeKind:

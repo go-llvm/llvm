@@ -60,12 +60,12 @@ func (g GenericValue) Dispose() { C.LLVMDisposeGenericValue(g.C) }
 func NewExecutionEngine(m Module) (ee ExecutionEngine, err error) {
 	var cmsg *C.char
 	fail := C.LLVMCreateExecutionEngineForModule(&ee.C, m.C, &cmsg)
-	if fail == 0 {
-		err = nil
-	} else {
+	if fail != 0 {
 		ee.C = nil
 		err = errors.New(C.GoString(cmsg))
 		C.LLVMDisposeMessage(cmsg)
+	} else {
+		err = nil
 	}
 	return
 }
@@ -73,24 +73,24 @@ func NewExecutionEngine(m Module) (ee ExecutionEngine, err error) {
 func NewInterpreter(m Module) (ee ExecutionEngine, err error) {
 	var cmsg *C.char
 	fail := C.LLVMCreateInterpreterForModule(&ee.C, m.C, &cmsg)
-	if fail == 0 {
-		err = nil
-	} else {
+	if fail != 0 {
 		ee.C = nil
 		err = errors.New(C.GoString(cmsg))
 		C.LLVMDisposeMessage(cmsg)
+	} else {
+		err = nil
 	}
 	return
 }
 func NewJITCompiler(m Module, optLevel int) (ee ExecutionEngine, err error) {
 	var cmsg *C.char
 	fail := C.LLVMCreateJITCompilerForModule(&ee.C, m.C, C.unsigned(optLevel), &cmsg)
-	if fail == 0 {
-		err = nil
-	} else {
+	if fail != 0 {
 		ee.C = nil
 		err = errors.New(C.GoString(cmsg))
 		C.LLVMDisposeMessage(cmsg)
+	} else {
+		err = nil
 	}
 	return
 }

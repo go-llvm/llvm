@@ -34,8 +34,8 @@ const (
 )
 
 const (
-	BigEndian    = C.LLVMBigEndian
-	LittleEndian = C.LLVMLittleEndian
+	BigEndian    ByteOrdering = C.LLVMBigEndian
+	LittleEndian ByteOrdering = C.LLVMLittleEndian
 )
 
 const (
@@ -66,29 +66,27 @@ const (
 	ObjectFile   CodeGenFileType = C.LLVMObjectFile
 )
 
-// LLVMInitializeAllTargetInfos - The main program should call this function if
-// it wants access to all available targets that LLVM is configured to
-// support.
+// InitializeAllTargetInfos - The main program should call this function if it
+// wants access to all available targets that LLVM is configured to support.
 func InitializeAllTargetInfos() { C.LLVMInitializeAllTargetInfos() }
 
-// LLVMInitializeAllTargets - The main program should call this function if it
-// wants to link in all available targets that LLVM is configured to
-// support.
+// InitializeAllTargets - The main program should call this function if it wants
+// to link in all available targets that LLVM is configured to support.
 func InitializeAllTargets() { C.LLVMInitializeAllTargets() }
 
 func InitializeAllTargetMCs() { C.LLVMInitializeAllTargetMCs() }
 
-// LLVMInitializeNativeTarget - The main program should call this function to
-// initialize the native target corresponding to the host. This is useful
-// for JIT applications to ensure that the target gets linked in correctly.
 var initializeNativeTargetError = errors.New("Failed to initialize native target")
 
+// InitializeNativeTarget - The main program should call this function to
+// initialize the native target corresponding to the host. This is useful
+// for JIT applications to ensure that the target gets linked in correctly.
 func InitializeNativeTarget() error {
 	fail := C.LLVMInitializeNativeTarget()
-	if fail == 0 {
-		return nil
+	if fail != 0 {
+		return initializeNativeTargetError
 	}
-	return initializeNativeTargetError
+	return nil
 }
 
 //-------------------------------------------------------------------------
@@ -121,8 +119,7 @@ func (td TargetData) String() (s string) {
 	return
 }
 
-// Returns the byte order of a target, either LLVMBigEndian or
-// LLVMLittleEndian.
+// Returns the byte order of a target, either BigEndian or LittleEndian.
 // See the method llvm::TargetData::isLittleEndian.
 func (td TargetData) ByteOrder() ByteOrdering { return ByteOrdering(C.LLVMByteOrder(td.C)) }
 

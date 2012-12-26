@@ -1,4 +1,4 @@
-// +build llvmsvn
+// +build llvmsvn llvm3.2 llvm3.3
 
 package llvm
 

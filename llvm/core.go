@@ -118,6 +118,9 @@ const (
 	NakedAttribute           Attribute = C.LLVMNakedAttribute
 	InlineHintAttribute      Attribute = C.LLVMInlineHintAttribute
 	StackAlignment           Attribute = C.LLVMStackAlignment
+	ReturnsTwiceAttribute    Attribute = C.LLVMReturnsTwice
+	UWTableAttribute         Attribute = C.LLVMUWTable
+	NonLazyBindAttribute     Attribute = C.LLVMNonLazyBind
 )
 
 //-------------------------------------------------------------------------

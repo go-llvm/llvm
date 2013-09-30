@@ -1201,7 +1201,7 @@ func (b Builder) Dispose() { C.LLVMDisposeBuilder(b.C) }
 // Metadata
 func (b Builder) SetCurrentDebugLocation(v Value) { C.LLVMSetCurrentDebugLocation(b.C, v.C) }
 func (b Builder) CurrentDebugLocation() (v Value) { v.C = C.LLVMGetCurrentDebugLocation(b.C); return }
-func (b Builder) SetInstDebugLocation(v Value)    { C.LLVMSetCurrentDebugLocation(b.C, v.C) }
+func (b Builder) SetInstDebugLocation(v Value)    { C.LLVMSetInstDebugLocation(b.C, v.C) }
 
 // Terminators
 func (b Builder) CreateRetVoid() (rv Value)    { rv.C = C.LLVMBuildRetVoid(b.C); return }

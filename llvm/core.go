@@ -1201,7 +1201,15 @@ func (b Builder) Dispose() { C.LLVMDisposeBuilder(b.C) }
 // Metadata
 func (b Builder) SetCurrentDebugLocation(v Value) { C.LLVMSetCurrentDebugLocation(b.C, v.C) }
 func (b Builder) CurrentDebugLocation() (v Value) { v.C = C.LLVMGetCurrentDebugLocation(b.C); return }
-func (b Builder) SetInstDebugLocation(v Value)    { C.LLVMSetCurrentDebugLocation(b.C, v.C) }
+func (b Builder) SetInstDebugLocation(v Value)    { C.LLVMSetInstDebugLocation(b.C, v.C) }
+func (b Builder) InsertDeclare(module Module, storage Value, md Value) Value {
+	f := module.NamedFunction("llvm.dbg.declare")
+	if f.IsNil() {
+		ftyp := FunctionType(VoidType(), []Type{storage.Type(), md.Type()}, false)
+		f = AddFunction(module, "llvm.dbg.declare", ftyp)
+	}
+	return b.CreateCall(f, []Value{storage, md}, "")
+}
 
 // Terminators
 func (b Builder) CreateRetVoid() (rv Value)    { rv.C = C.LLVMBuildRetVoid(b.C); return }

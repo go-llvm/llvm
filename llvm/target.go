@@ -13,9 +13,6 @@ type (
 	TargetData struct {
 		C C.LLVMTargetDataRef
 	}
-	StructLayout struct {
-		C C.LLVMStructLayoutRef
-	}
 	Target struct {
 		C C.LLVMTargetRef
 	}

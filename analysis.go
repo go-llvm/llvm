@@ -1,7 +1,7 @@
 package llvm
 
 /*
-#include <llvm-c/Analysis.h>
+#include <llvm-c/Analysis.h> // If you are getting an error here read README.md
 #include <stdlib.h>
 */
 import "C"

@@ -530,6 +530,10 @@ func (c Context) StructCreateNamed(name string) (t Type) {
 	return
 }
 
+func (t Type) StructName() string {
+	return C.GoString(C.LLVMGetStructName(t.C))
+}
+
 func (t Type) StructSetBody(elementTypes []Type, packed bool) {
 	var pt *C.LLVMTypeRef
 	var ptlen C.unsigned

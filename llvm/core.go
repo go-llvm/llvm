@@ -436,7 +436,7 @@ func (c Context) Int8Type() (t Type)  { t.C = C.LLVMInt8TypeInContext(c.C); retu
 func (c Context) Int16Type() (t Type) { t.C = C.LLVMInt16TypeInContext(c.C); return }
 func (c Context) Int32Type() (t Type) { t.C = C.LLVMInt32TypeInContext(c.C); return }
 func (c Context) Int64Type() (t Type) { t.C = C.LLVMInt64TypeInContext(c.C); return }
-func (c Context) IntType() (t Type, numbits int) {
+func (c Context) IntType(numbits int) (t Type) {
 	t.C = C.LLVMIntTypeInContext(c.C, C.unsigned(numbits))
 	return
 }

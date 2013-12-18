@@ -403,6 +403,11 @@ func (m Module) AddNamedMetadataOperand(name string, operand Value) {
 	C.free(unsafe.Pointer(cname))
 }
 
+func (m Module) Context() (c Context) {
+	c.C = C.LLVMGetModuleContext(m.C)
+	return
+}
+
 //-------------------------------------------------------------------------
 // llvm.Type
 //-------------------------------------------------------------------------

@@ -836,6 +836,11 @@ func (c Context) ConstStruct(constVals []Value, packed bool) (v Value) {
 		boolToLLVMBool(packed))
 	return
 }
+func ConstNamedStruct(t Type, constVals []Value) (v Value) {
+	ptr, nvals := llvmValueRefs(constVals)
+	v.C = C.LLVMConstNamedStruct(t.C, ptr, nvals)
+	return
+}
 func ConstString(str string, addnull bool) (v Value) {
 	cstr := C.CString(str)
 	v.C = C.LLVMConstString(cstr,

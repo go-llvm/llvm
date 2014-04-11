@@ -1080,6 +1080,13 @@ func (v Value) SetGC(name string) {
 func (v Value) AddFunctionAttr(a Attribute)    { C.LLVMAddFunctionAttr(v.C, C.LLVMAttribute(a)) }
 func (v Value) FunctionAttr() Attribute        { return Attribute(C.LLVMGetFunctionAttr(v.C)) }
 func (v Value) RemoveFunctionAttr(a Attribute) { C.LLVMRemoveFunctionAttr(v.C, C.LLVMAttribute(a)) }
+func (v Value) AddTargetDependentFunctionAttr(attr, value string) {
+	cattr := C.CString(attr)
+	cvalue := C.CString(value)
+	C.LLVMAddTargetDependentFunctionAttr(v.C, cattr, cvalue)
+	C.free(unsafe.Pointer(cattr))
+	C.free(unsafe.Pointer(cvalue))
+}
 
 // Operations on parameters
 func (v Value) ParamsCount() int { return int(C.LLVMCountParams(v.C)) }

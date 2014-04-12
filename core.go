@@ -1755,6 +1755,11 @@ func (l LandingPad) SetCleanup(cleanup bool) {
 	C.LLVMSetCleanup(l.C, boolToLLVMBool(cleanup))
 }
 
+func (b Builder) CreateResume(ex Value) (v Value) {
+	v.C = C.LLVMBuildResume(b.C, ex.C)
+	return
+}
+
 //-------------------------------------------------------------------------
 // llvm.ModuleProvider
 //-------------------------------------------------------------------------

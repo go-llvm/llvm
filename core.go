@@ -1741,24 +1741,18 @@ func (b Builder) CreatePtrDiff(lhs, rhs Value, name string) (v Value) {
 	return
 }
 
-//-------------------------------------------------------------------------
-// llvm.LandingPad
-//-------------------------------------------------------------------------
-
-type LandingPad Value
-
-func (b Builder) CreateLandingPad(t Type, personality Value, nclauses int, name string) LandingPad {
+func (b Builder) CreateLandingPad(t Type, personality Value, nclauses int, name string) (l Value) {
 	cname := C.CString(name)
-	lp := LandingPad{C: C.LLVMBuildLandingPad(b.C, t.C, personality.C, C.unsigned(nclauses), cname)}
+	l.C = C.LLVMBuildLandingPad(b.C, t.C, personality.C, C.unsigned(nclauses), cname)
 	C.free(unsafe.Pointer(cname))
-	return lp
+	return l
 }
 
-func (l LandingPad) AddClause(v Value) {
+func (l Value) AddClause(v Value) {
 	C.LLVMAddClause(l.C, v.C)
 }
 
-func (l LandingPad) SetCleanup(cleanup bool) {
+func (l Value) SetCleanup(cleanup bool) {
 	C.LLVMSetCleanup(l.C, boolToLLVMBool(cleanup))
 }
 

@@ -27,10 +27,6 @@ type (
 )
 
 const (
-	DefaultTargetTriple string = C.LLVM_DEFAULT_TARGET_TRIPLE
-)
-
-const (
 	BigEndian    ByteOrdering = C.LLVMBigEndian
 	LittleEndian ByteOrdering = C.LLVMLittleEndian
 )
@@ -239,4 +235,11 @@ func (tm TargetMachine) TargetData() TargetData {
 // Dispose releases resources related to the TargetMachine.
 func (tm TargetMachine) Dispose() {
 	C.LLVMDisposeTargetMachine(tm.C)
+}
+
+func DefaultTargetTriple() (triple string) {
+	cTriple := C.LLVMGetDefaultTargetTriple()
+	triple = C.GoString(cTriple)
+	C.free(unsafe.Pointer(cTriple))
+	return
 }

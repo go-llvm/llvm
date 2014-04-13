@@ -1814,6 +1814,12 @@ func NewMemoryBufferFromStdin() (b MemoryBuffer, err error) {
 	return
 }
 
+func (b MemoryBuffer) Bytes() []byte {
+	cstart := C.LLVMGetBufferStart(b.C)
+	csize := C.LLVMGetBufferSize(b.C)
+	return C.GoBytes(unsafe.Pointer(cstart), C.int(csize))
+}
+
 func (b MemoryBuffer) Dispose() { C.LLVMDisposeMemoryBuffer(b.C) }
 
 //-------------------------------------------------------------------------

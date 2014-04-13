@@ -390,6 +390,13 @@ func (m Module) Dump() {
 	C.LLVMDumpModule(m.C)
 }
 
+func (m Module) String() string {
+	cir := C.LLVMPrintModuleToString(m.C)
+	ir := C.GoString(cir)
+	C.free(unsafe.Pointer(cir))
+	return ir
+}
+
 // See Module::setModuleInlineAsm.
 func (m Module) SetInlineAsm(asm string) {
 	casm := C.CString(asm)

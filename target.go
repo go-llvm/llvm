@@ -197,6 +197,18 @@ func (t Target) NextTarget() Target {
 	return Target{C.LLVMGetNextTarget(t.C)}
 }
 
+func GetTargetFromTriple(triple string) (t Target, err error) {
+	var errstr *C.char
+	ctriple := C.CString(triple)
+	fail := C.LLVMGetTargetFromTriple(ctriple, &t.C, &errstr)
+	if fail != 0 {
+		err = errors.New(C.GoString(errstr))
+		C.free(unsafe.Pointer(errstr))
+	}
+	C.free(unsafe.Pointer(ctriple))
+	return
+}
+
 func (t Target) Name() string {
 	return C.GoString(C.LLVMGetTargetName(t.C))
 }

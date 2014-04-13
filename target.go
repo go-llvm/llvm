@@ -69,6 +69,10 @@ func InitializeAllTargets() { C.LLVMInitializeAllTargets() }
 
 func InitializeAllTargetMCs() { C.LLVMInitializeAllTargetMCs() }
 
+func InitializeAllAsmParsers() { C.LLVMInitializeAllAsmParsers() }
+
+func InitializeAllAsmPrinters() { C.LLVMInitializeAllAsmPrinters() }
+
 var initializeNativeTargetError = errors.New("Failed to initialize native target")
 
 // InitializeNativeTarget - The main program should call this function to

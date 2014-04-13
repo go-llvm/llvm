@@ -248,6 +248,18 @@ func (tm TargetMachine) TargetData() TargetData {
 	return TargetData{C.LLVMGetTargetMachineData(tm.C)}
 }
 
+func (tm TargetMachine) EmitToMemoryBuffer(m Module, ft CodeGenFileType) (MemoryBuffer, error) {
+	var errstr *C.char
+	var mb MemoryBuffer
+	fail := C.LLVMTargetMachineEmitToMemoryBuffer(tm.C, m.C, C.LLVMCodeGenFileType(ft), &errstr, &mb.C)
+	if fail != 0 {
+		err := errors.New(C.GoString(errstr))
+		C.free(unsafe.Pointer(errstr))
+		return MemoryBuffer{nil}, err
+	}
+	return mb, nil
+}
+
 // Dispose releases resources related to the TargetMachine.
 func (tm TargetMachine) Dispose() {
 	C.LLVMDisposeTargetMachine(tm.C)

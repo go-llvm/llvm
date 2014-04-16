@@ -390,6 +390,13 @@ func (m Module) Dump() {
 	C.LLVMDumpModule(m.C)
 }
 
+func (m Module) String() string {
+	cir := C.LLVMPrintModuleToString(m.C)
+	ir := C.GoString(cir)
+	C.free(unsafe.Pointer(cir))
+	return ir
+}
+
 // See Module::setModuleInlineAsm.
 func (m Module) SetInlineAsm(asm string) {
 	casm := C.CString(asm)
@@ -1805,6 +1812,12 @@ func NewMemoryBufferFromStdin() (b MemoryBuffer, err error) {
 		err = nil
 	}
 	return
+}
+
+func (b MemoryBuffer) Bytes() []byte {
+	cstart := C.LLVMGetBufferStart(b.C)
+	csize := C.LLVMGetBufferSize(b.C)
+	return C.GoBytes(unsafe.Pointer(cstart), C.int(csize))
 }
 
 func (b MemoryBuffer) Dispose() { C.LLVMDisposeMemoryBuffer(b.C) }

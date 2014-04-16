@@ -27,10 +27,6 @@ type (
 )
 
 const (
-	DefaultTargetTriple string = C.LLVM_DEFAULT_TARGET_TRIPLE
-)
-
-const (
 	BigEndian    ByteOrdering = C.LLVMBigEndian
 	LittleEndian ByteOrdering = C.LLVMLittleEndian
 )
@@ -72,6 +68,10 @@ func InitializeAllTargetInfos() { C.LLVMInitializeAllTargetInfos() }
 func InitializeAllTargets() { C.LLVMInitializeAllTargets() }
 
 func InitializeAllTargetMCs() { C.LLVMInitializeAllTargetMCs() }
+
+func InitializeAllAsmParsers() { C.LLVMInitializeAllAsmParsers() }
+
+func InitializeAllAsmPrinters() { C.LLVMInitializeAllAsmPrinters() }
 
 var initializeNativeTargetError = errors.New("Failed to initialize native target")
 
@@ -197,6 +197,18 @@ func (t Target) NextTarget() Target {
 	return Target{C.LLVMGetNextTarget(t.C)}
 }
 
+func GetTargetFromTriple(triple string) (t Target, err error) {
+	var errstr *C.char
+	ctriple := C.CString(triple)
+	fail := C.LLVMGetTargetFromTriple(ctriple, &t.C, &errstr)
+	if fail != 0 {
+		err = errors.New(C.GoString(errstr))
+		C.free(unsafe.Pointer(errstr))
+	}
+	C.free(unsafe.Pointer(ctriple))
+	return
+}
+
 func (t Target) Name() string {
 	return C.GoString(C.LLVMGetTargetName(t.C))
 }
@@ -236,7 +248,26 @@ func (tm TargetMachine) TargetData() TargetData {
 	return TargetData{C.LLVMGetTargetMachineData(tm.C)}
 }
 
+func (tm TargetMachine) EmitToMemoryBuffer(m Module, ft CodeGenFileType) (MemoryBuffer, error) {
+	var errstr *C.char
+	var mb MemoryBuffer
+	fail := C.LLVMTargetMachineEmitToMemoryBuffer(tm.C, m.C, C.LLVMCodeGenFileType(ft), &errstr, &mb.C)
+	if fail != 0 {
+		err := errors.New(C.GoString(errstr))
+		C.free(unsafe.Pointer(errstr))
+		return MemoryBuffer{nil}, err
+	}
+	return mb, nil
+}
+
 // Dispose releases resources related to the TargetMachine.
 func (tm TargetMachine) Dispose() {
 	C.LLVMDisposeTargetMachine(tm.C)
+}
+
+func DefaultTargetTriple() (triple string) {
+	cTriple := C.LLVMGetDefaultTargetTriple()
+	triple = C.GoString(cTriple)
+	C.free(unsafe.Pointer(cTriple))
+	return
 }

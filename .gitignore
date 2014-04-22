@@ -2,3 +2,5 @@
 *.[68]
 llvm/_cgo_export.h
 llvm/_obj
+llvm_config.go
+workdir

@@ -3,7 +3,7 @@ package llvm_test
 import (
 	"testing"
 
-	"github.com/axw/gollvm/llvm"
+	"github.com/go-llvm/llvm"
 )
 
 func TestStringRecursiveType(t *testing.T) {

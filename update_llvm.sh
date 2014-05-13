@@ -25,7 +25,7 @@ target \
 gollvmdir=$(dirname "$0")
 
 llvmrev=$(grep run_update_llvm_sh_to_get_revision_ $gollvmdir/llvm_dep.go | \
-          sed -e 's/.*run_update_llvm_sh_to_get_revision_\([0-9]\+\).*/\1/g')
+          sed -E -e 's/.*run_update_llvm_sh_to_get_revision_([0-9]+.*)/\1/g')
 
 workdir=$gollvmdir/workdir
 llvmdir=$workdir/llvm

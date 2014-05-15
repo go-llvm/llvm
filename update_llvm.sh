@@ -51,8 +51,13 @@ else
 fi
 
 llvm_cflags="$($llvm_config --cppflags)"
-llvm_ldflags="$($llvm_config --ldflags) -Wl,-rpath,$($llvm_config --libdir) $($llvm_config --libs $llvm_components) $($llvm_config --system-libs)"
-
+if [ $(uname) == "Darwin" ]; then
+  # OS X doesn't like -rpath with cgo. See:
+  # https://code.google.com/p/go/issues/detail?id=7293
+  llvm_ldflags="$($llvm_config --ldflags)                                     $($llvm_config --libs $llvm_components) $($llvm_config --system-libs)"
+else
+  llvm_ldflags="$($llvm_config --ldflags) -Wl,-rpath,$($llvm_config --libdir) $($llvm_config --libs $llvm_components) $($llvm_config --system-libs)"
+fi
 sed -e "s#@LLVM_REVISION@#$llvmrev#g; s#@LLVM_CFLAGS@#$llvm_cflags#g; \
         s#@LLVM_LDFLAGS@#$llvm_ldflags#g" $gollvmdir/llvm_config.go.in > \
   $gollvmdir/llvm_config.go

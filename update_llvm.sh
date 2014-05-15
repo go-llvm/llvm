@@ -51,7 +51,7 @@ else
 fi
 
 llvm_cflags="$($llvm_config --cppflags)"
-if [[ $OSTYPE == "darwin"* ]]; then
+if [ $(uname) == "Darwin" ]; then
   # OS X doesn't like -rpath with cgo. See:
   # https://code.google.com/p/go/issues/detail?id=7293
   llvm_ldflags="$($llvm_config --ldflags)                                     $($llvm_config --libs $llvm_components) $($llvm_config --system-libs)"

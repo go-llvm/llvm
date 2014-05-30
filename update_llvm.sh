@@ -11,12 +11,16 @@ codegen \
 core \
 debuginfo \
 executionengine \
+instrumentation \
 interpreter \
 ipo \
 irreader \
 jit \
 linker \
 mc \
+objcarcopts \
+option \
+profiledata \
 scalaropts \
 support \
 target \

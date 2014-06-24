@@ -168,6 +168,11 @@ func (d *DIBuilder) CreateLexicalBlock(diScope Value, b DILexicalBlock) Value {
 	return Value{C: result}
 }
 
+func (d *DIBuilder) CreateLexicalBlockFile(diScope Value, diFile Value) Value {
+	result := C.DIBuilderCreateLexicalBlockFile(d.ref, diScope.C, diFile.C)
+	return Value{C: result}
+}
+
 // DIFunction holds the values for creating function debug metadata.
 type DIFunction struct {
 	Name         string

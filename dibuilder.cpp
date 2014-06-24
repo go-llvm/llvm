@@ -62,6 +62,15 @@ LLVMValueRef DIBuilderCreateLexicalBlock(LLVMDIBuilderRef dref,
   return wrap(lb);
 }
 
+LLVMValueRef DIBuilderCreateLexicalBlockFile(LLVMDIBuilderRef dref,
+                                             LLVMValueRef diScope,
+                                             LLVMValueRef diFile) {
+  DIBuilder *d = unwrap(dref);
+  DILexicalBlockFile lbf = d->createLexicalBlockFile(
+      unwrapDI<DIDescriptor>(diScope), unwrapDI<DIFile>(diFile));
+  return wrap(lbf);
+}
+
 LLVMValueRef DIBuilderCreateFunction(LLVMDIBuilderRef dref,
                                      LLVMValueRef diScope, const char *name,
                                      const char *linkageName,

@@ -34,6 +34,10 @@ LLVMValueRef DIBuilderCreateLexicalBlock(LLVMDIBuilderRef d,
                                          unsigned column,
                                          unsigned discriminator);
 
+LLVMValueRef DIBuilderCreateLexicalBlockFile(LLVMDIBuilderRef d,
+                                             LLVMValueRef diScope,
+                                             LLVMValueRef diFile);
+
 LLVMValueRef DIBuilderCreateFunction(LLVMDIBuilderRef d, LLVMValueRef diScope,
                                      const char *name, const char *linkageName,
                                      LLVMValueRef diFile, unsigned line,

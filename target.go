@@ -260,6 +260,10 @@ func (tm TargetMachine) EmitToMemoryBuffer(m Module, ft CodeGenFileType) (Memory
 	return mb, nil
 }
 
+func (tm TargetMachine) AddAnalysisPasses(pm PassManager) {
+	C.LLVMAddAnalysisPasses(tm.C, pm.C)
+}
+
 // Dispose releases resources related to the TargetMachine.
 func (tm TargetMachine) Dispose() {
 	C.LLVMDisposeTargetMachine(tm.C)

@@ -2,6 +2,7 @@ package llvm
 
 /*
 #include <llvm-c/Core.h>
+#include "core.h"
 #include <stdlib.h>
 */
 import "C"
@@ -46,7 +47,7 @@ type (
 	Use struct {
 		C C.LLVMUseRef
 	}
-	Attribute        C.LLVMAttribute
+	Attribute        uint64
 	Opcode           C.LLVMOpcode
 	TypeKind         C.LLVMTypeKind
 	Linkage          C.LLVMLinkage
@@ -95,33 +96,47 @@ func llvmValueRefs(values []Value) (*C.LLVMValueRef, C.unsigned) {
 //-------------------------------------------------------------------------
 
 const (
-	NoneAttribute            Attribute = 0
-	ZExtAttribute            Attribute = C.LLVMZExtAttribute
-	SExtAttribute            Attribute = C.LLVMSExtAttribute
-	NoReturnAttribute        Attribute = C.LLVMNoReturnAttribute
-	InRegAttribute           Attribute = C.LLVMInRegAttribute
-	StructRetAttribute       Attribute = C.LLVMStructRetAttribute
-	NoUnwindAttribute        Attribute = C.LLVMNoUnwindAttribute
-	NoAliasAttribute         Attribute = C.LLVMNoAliasAttribute
-	ByValAttribute           Attribute = C.LLVMByValAttribute
-	NestAttribute            Attribute = C.LLVMNestAttribute
-	ReadNoneAttribute        Attribute = C.LLVMReadNoneAttribute
-	ReadOnlyAttribute        Attribute = C.LLVMReadOnlyAttribute
-	NoInlineAttribute        Attribute = C.LLVMNoInlineAttribute
-	AlwaysInlineAttribute    Attribute = C.LLVMAlwaysInlineAttribute
-	OptimizeForSizeAttribute Attribute = C.LLVMOptimizeForSizeAttribute
-	StackProtectAttribute    Attribute = C.LLVMStackProtectAttribute
-	StackProtectReqAttribute Attribute = C.LLVMStackProtectReqAttribute
-	Alignment                Attribute = C.LLVMAlignment
-	NoCaptureAttribute       Attribute = C.LLVMNoCaptureAttribute
-	NoRedZoneAttribute       Attribute = C.LLVMNoRedZoneAttribute
-	NoImplicitFloatAttribute Attribute = C.LLVMNoImplicitFloatAttribute
-	NakedAttribute           Attribute = C.LLVMNakedAttribute
-	InlineHintAttribute      Attribute = C.LLVMInlineHintAttribute
-	StackAlignment           Attribute = C.LLVMStackAlignment
-	ReturnsTwiceAttribute    Attribute = C.LLVMReturnsTwice
-	UWTableAttribute         Attribute = C.LLVMUWTable
-	NonLazyBindAttribute     Attribute = C.LLVMNonLazyBind
+	NoneAttribute               Attribute = 0
+	ZExtAttribute               Attribute = C.LLVMZExtAttribute
+	SExtAttribute               Attribute = C.LLVMSExtAttribute
+	NoReturnAttribute           Attribute = C.LLVMNoReturnAttribute
+	InRegAttribute              Attribute = C.LLVMInRegAttribute
+	StructRetAttribute          Attribute = C.LLVMStructRetAttribute
+	NoUnwindAttribute           Attribute = C.LLVMNoUnwindAttribute
+	NoAliasAttribute            Attribute = C.LLVMNoAliasAttribute
+	ByValAttribute              Attribute = C.LLVMByValAttribute
+	NestAttribute               Attribute = C.LLVMNestAttribute
+	ReadNoneAttribute           Attribute = C.LLVMReadNoneAttribute
+	ReadOnlyAttribute           Attribute = C.LLVMReadOnlyAttribute
+	NoInlineAttribute           Attribute = C.LLVMNoInlineAttribute
+	AlwaysInlineAttribute       Attribute = C.LLVMAlwaysInlineAttribute
+	OptimizeForSizeAttribute    Attribute = C.LLVMOptimizeForSizeAttribute
+	StackProtectAttribute       Attribute = C.LLVMStackProtectAttribute
+	StackProtectReqAttribute    Attribute = C.LLVMStackProtectReqAttribute
+	Alignment                   Attribute = C.LLVMAlignment
+	NoCaptureAttribute          Attribute = C.LLVMNoCaptureAttribute
+	NoRedZoneAttribute          Attribute = C.LLVMNoRedZoneAttribute
+	NoImplicitFloatAttribute    Attribute = C.LLVMNoImplicitFloatAttribute
+	NakedAttribute              Attribute = C.LLVMNakedAttribute
+	InlineHintAttribute         Attribute = C.LLVMInlineHintAttribute
+	StackAlignment              Attribute = C.LLVMStackAlignment
+	ReturnsTwiceAttribute       Attribute = C.LLVMReturnsTwice
+	UWTableAttribute            Attribute = C.LLVMUWTable
+	NonLazyBindAttribute        Attribute = 1 << 31
+	SanitizeAddressAttribute    Attribute = 1 << 32
+	MinSizeAttribute            Attribute = 1 << 33
+	NoDuplicateAttribute        Attribute = 1 << 34
+	StackProtectStrongAttribute Attribute = 1 << 35
+	SanitizeThreadAttribute     Attribute = 1 << 36
+	SanitizeMemoryAttribute     Attribute = 1 << 37
+	NoBuiltinAttribute          Attribute = 1 << 38
+	ReturnedAttribute           Attribute = 1 << 39
+	ColdAttribute               Attribute = 1 << 40
+	BuiltinAttribute            Attribute = 1 << 41
+	OptimizeNoneAttribute       Attribute = 1 << 42
+	InAllocaAttribute           Attribute = 1 << 43
+	NonNullAttribute            Attribute = 1 << 44
+	JumpTableAttribute          Attribute = 1 << 45
 )
 
 //-------------------------------------------------------------------------
@@ -1084,9 +1099,9 @@ func (v Value) SetGC(name string) {
 	C.LLVMSetGC(v.C, cname)
 	C.free(unsafe.Pointer(cname))
 }
-func (v Value) AddFunctionAttr(a Attribute)    { C.LLVMAddFunctionAttr(v.C, C.LLVMAttribute(a)) }
-func (v Value) FunctionAttr() Attribute        { return Attribute(C.LLVMGetFunctionAttr(v.C)) }
-func (v Value) RemoveFunctionAttr(a Attribute) { C.LLVMRemoveFunctionAttr(v.C, C.LLVMAttribute(a)) }
+func (v Value) AddFunctionAttr(a Attribute)    { C.gollvm_AddFunctionAttr(v.C, C.uint64_t(a)) }
+func (v Value) FunctionAttr() Attribute        { return Attribute(C.gollvm_GetFunctionAttr(v.C)) }
+func (v Value) RemoveFunctionAttr(a Attribute) { C.gollvm_RemoveFunctionAttr(v.C, C.uint64_t(a)) }
 func (v Value) AddTargetDependentFunctionAttr(attr, value string) {
 	cattr := C.CString(attr)
 	cvalue := C.CString(value)
@@ -1104,14 +1119,24 @@ func (v Value) Params() []Value {
 	}
 	return out
 }
-func (v Value) Param(i int) (rv Value)      { rv.C = C.LLVMGetParam(v.C, C.unsigned(i)); return }
-func (v Value) ParamParent() (rv Value)     { rv.C = C.LLVMGetParamParent(v.C); return }
-func (v Value) FirstParam() (rv Value)      { rv.C = C.LLVMGetFirstParam(v.C); return }
-func (v Value) LastParam() (rv Value)       { rv.C = C.LLVMGetLastParam(v.C); return }
-func NextParam(v Value) (rv Value)          { rv.C = C.LLVMGetNextParam(v.C); return }
-func PrevParam(v Value) (rv Value)          { rv.C = C.LLVMGetPreviousParam(v.C); return }
-func (v Value) AddAttribute(a Attribute)    { C.LLVMAddAttribute(v.C, C.LLVMAttribute(a)) }
-func (v Value) RemoveAttribute(a Attribute) { C.LLVMRemoveAttribute(v.C, C.LLVMAttribute(a)) }
+func (v Value) Param(i int) (rv Value)  { rv.C = C.LLVMGetParam(v.C, C.unsigned(i)); return }
+func (v Value) ParamParent() (rv Value) { rv.C = C.LLVMGetParamParent(v.C); return }
+func (v Value) FirstParam() (rv Value)  { rv.C = C.LLVMGetFirstParam(v.C); return }
+func (v Value) LastParam() (rv Value)   { rv.C = C.LLVMGetLastParam(v.C); return }
+func NextParam(v Value) (rv Value)      { rv.C = C.LLVMGetNextParam(v.C); return }
+func PrevParam(v Value) (rv Value)      { rv.C = C.LLVMGetPreviousParam(v.C); return }
+func (v Value) AddAttribute(a Attribute) {
+	if a >= 1<<32 {
+		panic("attribute value currently unsupported")
+	}
+	C.LLVMAddAttribute(v.C, C.LLVMAttribute(a))
+}
+func (v Value) RemoveAttribute(a Attribute) {
+	if a >= 1<<32 {
+		panic("attribute value currently unsupported")
+	}
+	C.LLVMRemoveAttribute(v.C, C.LLVMAttribute(a))
+}
 func (v Value) Attribute() Attribute        { return Attribute(C.LLVMGetAttribute(v.C)) }
 func (v Value) SetParamAlignment(align int) { C.LLVMSetParamAlignment(v.C, C.unsigned(align)) }
 
@@ -1174,9 +1199,15 @@ func (v Value) InstructionCallConv() CallConv {
 	return CallConv(C.LLVMCallConv(C.LLVMGetInstructionCallConv(v.C)))
 }
 func (v Value) AddInstrAttribute(i int, a Attribute) {
+	if a >= 1<<32 {
+		panic("attribute value currently unsupported")
+	}
 	C.LLVMAddInstrAttribute(v.C, C.unsigned(i), C.LLVMAttribute(a))
 }
 func (v Value) RemoveInstrAttribute(i int, a Attribute) {
+	if a >= 1<<32 {
+		panic("attribute value currently unsupported")
+	}
 	C.LLVMRemoveInstrAttribute(v.C, C.unsigned(i), C.LLVMAttribute(a))
 }
 func (v Value) SetInstrParamAlignment(i int, align int) {

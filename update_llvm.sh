@@ -48,7 +48,7 @@ if test -n "`which ninja`" ; then
   (cd $llvm_builddir && cmake -G Ninja $cmake_flags)
   ninja -C $llvm_builddir llvm-config
   llvm_buildtargets="$($llvm_config --libs $llvm_components | sed -e 's/-l//g')"
-  ninja -C $llvm_builddir $llvm_buildtargets
+  ninja -C $llvm_builddir $llvm_buildtargets FileCheck
 else
   (cd $llvm_builddir && cmake $cmake_flags)
   make -C $llvm_builddir -j4

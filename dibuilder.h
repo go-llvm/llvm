@@ -95,6 +95,9 @@ LLVMValueRef DIBuilderGetOrCreateSubrange(LLVMDIBuilderRef d, int64_t lo,
 LLVMValueRef DIBuilderGetOrCreateArray(LLVMDIBuilderRef d, LLVMValueRef *data,
                                        size_t length);
 
+LLVMValueRef DIBuilderGetOrCreateTypeArray(LLVMDIBuilderRef d,
+                                           LLVMValueRef *data, size_t length);
+
 LLVMValueRef DIBuilderInsertDeclareAtEnd(LLVMDIBuilderRef d,
                                          LLVMValueRef storage,
                                          LLVMValueRef varInfo,

@@ -127,7 +127,7 @@ LLVMValueRef DIBuilderCreateSubroutineType(LLVMDIBuilderRef dref,
                                            LLVMValueRef diParameterTypes) {
   DIBuilder *d = unwrap(dref);
   DICompositeType ct = d->createSubroutineType(
-      unwrapDI<DIFile>(diFile), unwrapDI<DIArray>(diParameterTypes));
+      unwrapDI<DIFile>(diFile), unwrapDI<DITypeArray>(diParameterTypes));
   return wrap(ct);
 }
 
@@ -195,6 +195,15 @@ LLVMValueRef DIBuilderGetOrCreateArray(LLVMDIBuilderRef dref,
   Value **dataValue = unwrap(data);
   ArrayRef<Value *> elements(dataValue, length);
   DIArray a = d->getOrCreateArray(elements);
+  return wrap(a);
+}
+
+LLVMValueRef DIBuilderGetOrCreateTypeArray(LLVMDIBuilderRef dref,
+                                           LLVMValueRef *data, size_t length) {
+  DIBuilder *d = unwrap(dref);
+  Value **dataValue = unwrap(data);
+  ArrayRef<Value *> elements(dataValue, length);
+  DITypeArray a = d->getOrCreateTypeArray(elements);
   return wrap(a);
 }
 

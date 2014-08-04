@@ -48,12 +48,13 @@ if test -n "`which ninja`" ; then
   (cd $llvm_builddir && cmake -G Ninja $cmake_flags)
   ninja -C $llvm_builddir llvm-config
   llvm_buildtargets="$($llvm_config --libs $llvm_components | sed -e 's/-l//g')"
-  ninja -C $llvm_builddir $llvm_buildtargets
+  ninja -C $llvm_builddir $llvm_buildtargets FileCheck
 else
   (cd $llvm_builddir && cmake $cmake_flags)
   make -C $llvm_builddir -j4
 fi
 
+llvm_version="$($llvm_config --version)"
 llvm_cflags="$($llvm_config --cppflags)"
 if [ $(uname) == "Darwin" ]; then
   # OS X doesn't like -rpath with cgo. See:
@@ -65,3 +66,4 @@ fi
 sed -e "s#@LLVM_REVISION@#$llvmrev#g; s#@LLVM_CFLAGS@#$llvm_cflags#g; \
         s#@LLVM_LDFLAGS@#$llvm_ldflags#g" $gollvmdir/llvm_config.go.in > \
   $gollvmdir/llvm_config.go
+echo -e "package llvm\n\nconst Version = \"$llvm_version\"" > $gollvmdir/version.go

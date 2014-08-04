@@ -302,7 +302,7 @@ type DISubroutineType struct {
 
 // CreateSubroutineType creates subroutine type debug metadata.
 func (d *DIBuilder) CreateSubroutineType(t DISubroutineType) Value {
-	params := d.getOrCreateArray(t.Parameters)
+	params := d.getOrCreateTypeArray(t.Parameters)
 	result := C.DIBuilderCreateSubroutineType(d.ref, t.File.C, params.C)
 	return Value{C: result}
 }
@@ -444,6 +444,21 @@ func (d *DIBuilder) getOrCreateArray(values []Value) Value {
 		data = &values[0].C
 	}
 	result := C.DIBuilderGetOrCreateArray(d.ref, data, C.size_t(length))
+	return Value{C: result}
+}
+
+// getOrCreateTypeArray gets a metadata node for a type array containing the
+// specified values, creating if required.
+func (d *DIBuilder) getOrCreateTypeArray(values []Value) Value {
+	if len(values) == 0 {
+		return Value{}
+	}
+	var data *C.LLVMValueRef
+	length := len(values)
+	if length > 0 {
+		data = &values[0].C
+	}
+	result := C.DIBuilderGetOrCreateTypeArray(d.ref, data, C.size_t(length))
 	return Value{C: result}
 }
 

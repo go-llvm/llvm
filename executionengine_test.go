@@ -5,8 +5,9 @@ import (
 )
 
 func TestFactorial(t *testing.T) {
-	LinkInJIT()
+	LinkInMCJIT()
 	InitializeNativeTarget()
+	InitializeNativeAsmPrinter()
 
 	mod := NewModule("fac_module")
 
@@ -52,7 +53,7 @@ func TestFactorial(t *testing.T) {
 		return
 	}
 
-	engine, err := NewJITCompiler(mod, 2)
+	engine, err := NewMCJITCompiler(mod, MCJITCompilerOptions{OptLevel: 2})
 	if err != nil {
 		t.Errorf("Error creating JIT: %s", err)
 		return

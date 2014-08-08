@@ -66,4 +66,4 @@ fi
 sed -e "s#@LLVM_REVISION@#$llvmrev#g; s#@LLVM_CFLAGS@#$llvm_cflags#g; \
         s#@LLVM_LDFLAGS@#$llvm_ldflags#g" $gollvmdir/llvm_config.go.in > \
   $gollvmdir/llvm_config.go
-echo -e "package llvm\n\nconst Version = \"$llvm_version\"" > $gollvmdir/version.go
+printf "package llvm\n\nconst Version = \"%s\"\n" "$llvm_version" > $gollvmdir/version.go

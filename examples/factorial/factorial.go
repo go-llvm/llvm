@@ -6,8 +6,9 @@ import "fmt"
 import "github.com/go-llvm/llvm"
 
 func test() {
-	llvm.LinkInJIT()
+	llvm.LinkInMCJIT()
 	llvm.InitializeNativeTarget()
+	llvm.InitializeNativeAsmPrinter()
 
 	mod := llvm.NewModule("fac_module")
 
@@ -56,7 +57,7 @@ func test() {
 		return
 	}
 
-	engine, err := llvm.NewJITCompiler(mod, 2)
+	engine, err := llvm.NewMCJITCompiler(mod, llvm.MCJITCompilerOptions{OptLevel: 2})
 	if err != nil {
 		fmt.Println(err)
 		return

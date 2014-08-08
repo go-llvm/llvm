@@ -15,9 +15,9 @@ instrumentation \
 interpreter \
 ipo \
 irreader \
-jit \
 linker \
 mc \
+mcjit \
 objcarcopts \
 option \
 profiledata \

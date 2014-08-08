@@ -86,6 +86,14 @@ func InitializeNativeTarget() error {
 	return nil
 }
 
+func InitializeNativeAsmPrinter() error {
+	fail := C.LLVMInitializeNativeAsmPrinter()
+	if fail != 0 {
+		return initializeNativeTargetError
+	}
+	return nil
+}
+
 //-------------------------------------------------------------------------
 // llvm.TargetData
 //-------------------------------------------------------------------------

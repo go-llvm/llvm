@@ -150,9 +150,6 @@ type DILexicalBlock struct {
 	File   Value
 	Line   int
 	Column int
-
-	// Discriminator is the DWARF path discriminator.
-	Discriminator int
 }
 
 // CreateCompileUnit creates lexical block debug metadata.
@@ -163,13 +160,14 @@ func (d *DIBuilder) CreateLexicalBlock(diScope Value, b DILexicalBlock) Value {
 		b.File.C,
 		C.unsigned(b.Line),
 		C.unsigned(b.Column),
-		C.unsigned(b.Discriminator),
 	)
 	return Value{C: result}
 }
 
-func (d *DIBuilder) CreateLexicalBlockFile(diScope Value, diFile Value) Value {
-	result := C.DIBuilderCreateLexicalBlockFile(d.ref, diScope.C, diFile.C)
+func (d *DIBuilder) CreateLexicalBlockFile(diScope Value, diFile Value,
+	discriminator int) Value {
+	result := C.DIBuilderCreateLexicalBlockFile(d.ref, diScope.C, diFile.C,
+		C.unsigned(discriminator))
 	return Value{C: result}
 }
 

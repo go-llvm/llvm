@@ -53,21 +53,21 @@ LLVMValueRef DIBuilderCreateFile(LLVMDIBuilderRef dref, const char *file,
 LLVMValueRef DIBuilderCreateLexicalBlock(LLVMDIBuilderRef dref,
                                          LLVMValueRef diScope,
                                          LLVMValueRef diFile, unsigned line,
-                                         unsigned column,
-                                         unsigned discriminator) {
+                                         unsigned column) {
   DIBuilder *d = unwrap(dref);
   DILexicalBlock lb = d->createLexicalBlock(unwrapDI<DIDescriptor>(diScope),
                                             unwrapDI<DIFile>(diFile), line,
-                                            column, discriminator);
+                                            column);
   return wrap(lb);
 }
 
 LLVMValueRef DIBuilderCreateLexicalBlockFile(LLVMDIBuilderRef dref,
                                              LLVMValueRef diScope,
-                                             LLVMValueRef diFile) {
+                                             LLVMValueRef diFile,
+                                             unsigned discriminator) {
   DIBuilder *d = unwrap(dref);
   DILexicalBlockFile lbf = d->createLexicalBlockFile(
-      unwrapDI<DIDescriptor>(diScope), unwrapDI<DIFile>(diFile));
+      unwrapDI<DIDescriptor>(diScope), unwrapDI<DIFile>(diFile), discriminator);
   return wrap(lbf);
 }
 

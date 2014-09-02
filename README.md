@@ -3,6 +3,8 @@ GoLLVM
 
 [LLVM](http://llvm.org) bindings for [The Go Programming Language](http://golang.org).
 
+[![Build Status](https://travis-ci.org/go-llvm/llvm.svg)](https://travis-ci.org/go-llvm/llvm)
+
 Prerequisites
 -------------
 

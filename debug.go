@@ -150,6 +150,9 @@ type DILexicalBlock struct {
 	File   Value
 	Line   int
 	Column int
+
+	// Discriminator is the DWARF path discriminator.
+	Discriminator int
 }
 
 // CreateCompileUnit creates lexical block debug metadata.
@@ -160,14 +163,13 @@ func (d *DIBuilder) CreateLexicalBlock(diScope Value, b DILexicalBlock) Value {
 		b.File.C,
 		C.unsigned(b.Line),
 		C.unsigned(b.Column),
+		C.unsigned(b.Discriminator),
 	)
 	return Value{C: result}
 }
 
-func (d *DIBuilder) CreateLexicalBlockFile(diScope Value, diFile Value,
-	discriminator int) Value {
-	result := C.DIBuilderCreateLexicalBlockFile(d.ref, diScope.C, diFile.C,
-		C.unsigned(discriminator))
+func (d *DIBuilder) CreateLexicalBlockFile(diScope Value, diFile Value) Value {
+	result := C.DIBuilderCreateLexicalBlockFile(d.ref, diScope.C, diFile.C)
 	return Value{C: result}
 }
 
@@ -300,7 +302,7 @@ type DISubroutineType struct {
 
 // CreateSubroutineType creates subroutine type debug metadata.
 func (d *DIBuilder) CreateSubroutineType(t DISubroutineType) Value {
-	params := d.getOrCreateTypeArray(t.Parameters)
+	params := d.getOrCreateArray(t.Parameters)
 	result := C.DIBuilderCreateSubroutineType(d.ref, t.File.C, params.C)
 	return Value{C: result}
 }
@@ -442,21 +444,6 @@ func (d *DIBuilder) getOrCreateArray(values []Value) Value {
 		data = &values[0].C
 	}
 	result := C.DIBuilderGetOrCreateArray(d.ref, data, C.size_t(length))
-	return Value{C: result}
-}
-
-// getOrCreateTypeArray gets a metadata node for a type array containing the
-// specified values, creating if required.
-func (d *DIBuilder) getOrCreateTypeArray(values []Value) Value {
-	if len(values) == 0 {
-		return Value{}
-	}
-	var data *C.LLVMValueRef
-	length := len(values)
-	if length > 0 {
-		data = &values[0].C
-	}
-	result := C.DIBuilderGetOrCreateTypeArray(d.ref, data, C.size_t(length))
 	return Value{C: result}
 }
 

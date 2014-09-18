@@ -53,21 +53,21 @@ LLVMValueRef DIBuilderCreateFile(LLVMDIBuilderRef dref, const char *file,
 LLVMValueRef DIBuilderCreateLexicalBlock(LLVMDIBuilderRef dref,
                                          LLVMValueRef diScope,
                                          LLVMValueRef diFile, unsigned line,
-                                         unsigned column) {
+                                         unsigned column,
+                                         unsigned discriminator) {
   DIBuilder *d = unwrap(dref);
   DILexicalBlock lb = d->createLexicalBlock(unwrapDI<DIDescriptor>(diScope),
                                             unwrapDI<DIFile>(diFile), line,
-                                            column);
+                                            column, discriminator);
   return wrap(lb);
 }
 
 LLVMValueRef DIBuilderCreateLexicalBlockFile(LLVMDIBuilderRef dref,
                                              LLVMValueRef diScope,
-                                             LLVMValueRef diFile,
-                                             unsigned discriminator) {
+                                             LLVMValueRef diFile) {
   DIBuilder *d = unwrap(dref);
   DILexicalBlockFile lbf = d->createLexicalBlockFile(
-      unwrapDI<DIDescriptor>(diScope), unwrapDI<DIFile>(diFile), discriminator);
+      unwrapDI<DIDescriptor>(diScope), unwrapDI<DIFile>(diFile));
   return wrap(lbf);
 }
 
@@ -127,7 +127,7 @@ LLVMValueRef DIBuilderCreateSubroutineType(LLVMDIBuilderRef dref,
                                            LLVMValueRef diParameterTypes) {
   DIBuilder *d = unwrap(dref);
   DICompositeType ct = d->createSubroutineType(
-      unwrapDI<DIFile>(diFile), unwrapDI<DITypeArray>(diParameterTypes));
+      unwrapDI<DIFile>(diFile), unwrapDI<DIArray>(diParameterTypes));
   return wrap(ct);
 }
 
@@ -195,15 +195,6 @@ LLVMValueRef DIBuilderGetOrCreateArray(LLVMDIBuilderRef dref,
   Value **dataValue = unwrap(data);
   ArrayRef<Value *> elements(dataValue, length);
   DIArray a = d->getOrCreateArray(elements);
-  return wrap(a);
-}
-
-LLVMValueRef DIBuilderGetOrCreateTypeArray(LLVMDIBuilderRef dref,
-                                           LLVMValueRef *data, size_t length) {
-  DIBuilder *d = unwrap(dref);
-  Value **dataValue = unwrap(data);
-  ArrayRef<Value *> elements(dataValue, length);
-  DITypeArray a = d->getOrCreateTypeArray(elements);
   return wrap(a);
 }
 

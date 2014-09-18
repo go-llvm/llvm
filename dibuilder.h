@@ -31,12 +31,12 @@ LLVMValueRef DIBuilderCreateFile(LLVMDIBuilderRef d, const char *file,
 LLVMValueRef DIBuilderCreateLexicalBlock(LLVMDIBuilderRef d,
                                          LLVMValueRef diScope,
                                          LLVMValueRef diFile, unsigned line,
-                                         unsigned column);
+                                         unsigned column,
+                                         unsigned discriminator);
 
 LLVMValueRef DIBuilderCreateLexicalBlockFile(LLVMDIBuilderRef d,
                                              LLVMValueRef diScope,
-                                             LLVMValueRef diFile,
-                                             unsigned discriminator);
+                                             LLVMValueRef diFile);
 
 LLVMValueRef DIBuilderCreateFunction(LLVMDIBuilderRef d, LLVMValueRef diScope,
                                      const char *name, const char *linkageName,
@@ -94,9 +94,6 @@ LLVMValueRef DIBuilderGetOrCreateSubrange(LLVMDIBuilderRef d, int64_t lo,
 
 LLVMValueRef DIBuilderGetOrCreateArray(LLVMDIBuilderRef d, LLVMValueRef *data,
                                        size_t length);
-
-LLVMValueRef DIBuilderGetOrCreateTypeArray(LLVMDIBuilderRef d,
-                                           LLVMValueRef *data, size_t length);
 
 LLVMValueRef DIBuilderInsertDeclareAtEnd(LLVMDIBuilderRef d,
                                          LLVMValueRef storage,

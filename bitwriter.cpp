@@ -18,5 +18,5 @@ LLVMMemoryBufferRef gollvm_WriteBitcodeToMemoryBuffer(LLVMModuleRef M) {
   raw_string_ostream OS(Data);
 
   WriteBitcodeToFile(unwrap(M), OS);
-  return wrap(MemoryBuffer::getMemBufferCopy(OS.str()));
+  return wrap(MemoryBuffer::getMemBufferCopy(OS.str()).release());
 }

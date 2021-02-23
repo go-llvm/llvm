@@ -2,7 +2,7 @@ GoLLVM
 ------
 
 **This project has moved to [llvm.org](http://llvm.org). Any contributions or bug reports should be sent there.
-Please refer to the [Go bindings readme](http://llvm.org/svn/llvm-project/llvm/trunk/bindings/go/README.txt)
+Please refer to the [Go bindings readme](https://github.com/llvm/llvm-project/tree/main/llvm/bindings/go/README.txt)
 for more information.**
 
 [LLVM](http://llvm.org) bindings for [The Go Programming Language](http://golang.org).
